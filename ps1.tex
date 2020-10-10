@@ -35,48 +35,185 @@
 \maketitle
 	% tells latex to follow your header (e.g., title, author) commands.
 
-
+Collaborators: Kenjiro Asami, Chiying Wang
 \section*{Problem 1}
 
-\paragraph{A)} Answer to Problem 1(A) here.
+\paragraph{Bad News:}
 
-\subparagraph{i)} Answer to Problem 1(A)(i) here.
+We prove that taking symmetric pure strategies is without loss of generality.
 
-\subparagraph{ii)} Answer to Problem 1(A)(ii) here.
+We first show the easier part, that pure strategies suffice. Suppose that after some history $h^t$, a equilibrium strategy $\alpha$ has player $i$ mixing over some support $S$ which contains two effort levels $e_i \neq e_i'$, $e_i, e_i' \in S$. Let $y = 0$ if no bad signal is received (no mistake) and $1$ if a bad signal occurs. We know from Corollary 2, since $E_\delta = B(E_\delta)$, that there exists some $w(y)$ continuation payoffs that enforces $\alpha$. Then $\alpha$ must be a NE of the game with reward/payoff given by
+\[ r(\alpha_i) = (1-\delta)u(\alpha_i) + \delta \left( \sum_{y=0}^1 \pi(y | \alpha_i, \alpha_{-i}) w(y) \right) \]
+Define $e_i'$ as the expected effort level of player $i$:
+\[ e_i' = E_{\alpha_i}[e] = \int_e e \alpha_i(e) \]
+Let the strategy $\alpha_i'$ be the pure strategy playing effort level $e'_i$. Then note that:
+\[ \pi(y | \alpha_i) = \int_{e_i} \alpha(e_i) \Delta \left( 6 - \sum_{j\neq i} e_j - e_i \right) \]
+\[ = \int_{e_i} \alpha(e_i) \Delta \left( 6 - \sum_{j\neq i} e_j\right) - \int_{e_i} \alpha(e_i) \Delta \left(e_i \right) \]
+\[ = \Delta \left( 6 - \sum_{j\neq i} e_j\right) - \Delta e'_i \]
+\[ = \Delta \left( 6 - \sum_{j\neq i} e_j - e'_i\right)\]
+\[ = \pi(y | \alpha'_i) \]
+And hence, playing pure strategy $\alpha_i'$ is yields the same signal probability distribution as playing the mixed strategy $\alpha_i$. Now,
+\[ u(\alpha_i) = - \pi(1 | \alpha_i) - \int_{e_i}\alpha_i(e_i)\frac{e_i + e_i^2}{2} \]
+\[ = - \pi(1 | \alpha_i) -E_{\alpha_i}\left( \frac{e_i + e_i^2}{2} \right) \]
+\[ \le - \pi(1 | \alpha_i) - \left( \frac{e'_i + (e'_i)^2}{2} \right) \]
+\[ = - \pi(1 | \alpha'_i) - \left( \frac{e'_i + (e'_i)^2}{2} \right) \]
+\[ = u(\alpha'_i) \]
+where the third step follows from Jensen's inequality. But this implies
+\[ r(\alpha_i) = (1-\delta)u(\alpha_i) + \delta \left( \sum_{y=0}^1 \pi(y | \alpha_i, \alpha_{-i}) w(y) \right) \]
+\[ \le (1-\delta)u(\alpha'_i) + \delta \left( \sum_{y=0}^1 \pi(y | \alpha_i) w(y) \right)\]
+\[ = (1-\delta)u(\alpha'_i) + \delta \left( \sum_{y=0}^1 \pi(y | \alpha'_i) w(y) \right)\]
+\[ = r(\alpha'_i) \]
+Then, if $\alpha_i$ is a NE of the game with rewards given by $\alpha_i$, we see that since $\alpha'_i$ is a pure strategy that delivers a payoff at least as good as $\alpha_i$, $\alpha'_i$ must also be a NE of the game that is enforced by the same $w$. Hence, it is without loss that we only consider pure strategies.
 
-\subparagraph{iii)} Answer to Problem 1(A)(iii) here.
+Now, we have to show that it is without loss that we consider symmetric strategies. We will assume that we have a public randomization device, and hence the set of PPE payoffs is monotone in $\delta$. Then we know that from FLT, since
+\[ \lim_{\delta \to 1} E_\delta \subset \mathcal{H} \]
+Due to monotonicity then, we have that $E_\delta \subseteq \mathcal{H}$. Then, it suffices to show that $\mathcal{H}$ contains no asymmetric payoffs. In order to do this, we consider the scores along $\lambda_{ij} = 1_i - 1_j$ where $i \neq j$, and we use $1_i$ to denote the $i$th basis vector $R^5$ (since we have 5 players). The score is given by
+\[ \sup_{x,v} v_i - v_j \]
+where $v$ is a NE payoff of $\Gamma(x)$ where $x$ satsifies
+\[ x_i(y) - x_j(y) \le 0 \]
+By examining the structure of the stage game, we see that the payoff for player $i$ is given by
+\[ v_i = \max_{e'} \left[ - \frac{\Delta(e' + (e')^2)}{2} + \left(6-\sum e_k \right)\Delta (x_i(1) - 1)  + \left(1 - \left(6-\sum e_k \right)\Delta \right)x_i(0) \right] \]
+To make notation cleaner, let us define $p(\vec{e}) = \left(6-\sum e_k \right)\Delta$ as the probability of an accident assuming the effort vector $\vec{e}$.
+\[ v_i = \max_{e'} \left[ - \frac{\Delta(e' + (e')^2)}{2} + p(\vec{e}) (x_i(1) - 1)  + \left(1 - p(\vec{e}) \right)x_i(0) \right] \]
+Finding the maximum value from the FOC, we find
+\[ e_i = \frac{1}{2} + x_i(0) - x_i(1) \]
+and similarly
+\[ e_j = \frac{1}{2} + x_j(0) - x_j(1) \]
+Now, we consider
+\[ v_i - v_j = \frac{\Delta(e_j - e_i + e_j^2 - e_i^2)}{2} + p(\vec{e}) (x_i(1) - x_j(1))  + \left(1 - p(\vec{e}) \right)(x_i(0) - x_j(0)) \]
+To maximize this, we take the FOCs. With respect to $x_i(0)$, we get
+\[ (\Delta/2)(-1 - 2e_i) - \Delta (x_i(1) - x_j(1)) + (1 - p(\vec{e})) + \Delta (x_i(0) - x_j(0)) = 0 \]
+\[ -\Delta+ \Delta x_j(1) + (1 - p(\vec{e})) - \Delta x_j(0) = 0 \]
+\[ \frac{1}{\Delta} (1-p(\vec{e})) = 1 + x_j(0) - x_j(1) \]
+with respect to $x_j(0)$, we get
+\[ \frac{\Delta}{2}(1 + 2e_j) - \Delta(x_i(1) - x_j(1)) - (1 - p(\vec{e})) + \Delta(x_i(0) - x_j(0)) = 0 \]
+\[ \Delta - \Delta x_i(1)  - (1 - p(\vec{e})) + \Delta(x_i(0)) = 0 \]
+\[ 1  + x_i(0)-  x_i(1)  = \frac{1}{\Delta}(1 - p(\vec{e})) \]
+So then we find, at optimum
+\[1  + x_i(0)-  x_i(1) = 1 + x_j(0) - x_j(1) \]
+\[ e_i = e_j \]
+Then at optimum, we have
+\[ v_i - v_j = p(\vec{e}) (x_i(1) - x_j(1))  + \left(1 - p(\vec{e}) \right)(x_i(0) - x_j(0))  \]
+However, $x_i(1) - x_j(1) \le 0$, and $x_i(0) - x_j(0) \le 0$ by the constraint $\lambda_{ij} x(y) \le 0$. Therefore,
+\[ v_i - v_j \le 0 \]
+We note that 0 is achieved if $x_i(y) = x_j(y)$, so the value  $\sup (v_i - v_j) = 0$.
+Hence we have $v_i \le v_j$ for payoffs of the game $\Gamma(x)$. But we note that if we set $x_i = x_j$, we can exactly achieve equality $v_i = v_j$. Therefore, the maximum value
+\[ \sup_{x,v} v_i - v_j = 0\]
+Now, by the result from FLT, we have that all equilibrium payoff vectors must then satisfy $v_i \le v_j$. Further, by repeating our exact logic for vector $\lambda_{ji}$, we have that all equilibrium payoff vectors must satisfy $v_j \le v_i$. Together, these imply that for all pairs $i,j$, if $v \in E_{\delta}$, $v_i = v_j$. Hence it is without loss that we consider symmetric pure strategies.
 
-\paragraph{B)} Answer to Problem 1(B) here.
+\paragraph{Good News:}
+The logic is also pretty much the same for this case.  We will again derive these results. (Intuitively, the reasoning for why it is without loss to consider pure strategies is due to the convexity of cost function, and it was without loss to consider symmetric strategies because the signalling structure could not identify individual deviations in behavior. None of these characteristics change between the good news and bad news cases.)
 
-\subparagraph{i)} Answer to Problem 1(B)(i) here.
+Once again, it is significantly easier to show pure strategies is without loss, as we can once again argue that strategies that mix over a non-singleton support cannot be admissible. Suppose that after some history $h^t$, a equilibrium strategy $\alpha$ has player $i$ mixing over some support $S$ which contains two effort levels $e_i \neq e_i'$, $e_i, e_i' \in S$. Let $y = 0$ if no good signal is received and $1$ if a good signal occurs. We know from Corollary 2, since $E_\delta = B(E_\delta)$, that there exists some $w(y)$ continuation payoffs that enforces $\alpha$. Then $\alpha$ must be a NE of the game with reward/payoff given by
+\[ r(\alpha_i) = (1-\delta)u(\alpha_i) + \delta \left( \sum_{y=0}^1 \pi(y | \alpha_i, \alpha_{-i}) w(y) \right) \]
+Define $e_i'$ as the expected effort level of player $i$:
+\[ e_i' = E_{\alpha_i}[e] = \int_e e \alpha_i(e) \]
+Let the strategy $\alpha_i'$ be the pure strategy playing effort level $e'_i$. Then note that:
+\[ \pi(1 | \alpha_i) = \int_{e_i} \alpha(e_i) \Delta \left( 1 + \sum_{j\neq i} e_j + e_i \right) \]
+\[ = \int_{e_i} \alpha(e_i) \Delta \left( 1  + \sum_{j\neq i} e_j\right) + \int_{e_i} \alpha(e_i) \Delta \left(e_i \right) \]
+\[ = \Delta \left( 1 +  \sum_{j\neq i} e_j\right) + \Delta e'_i \]
+\[ = \Delta \left( 1 +  \sum_{j\neq i} e_j + e'_i\right)\]
+\[ = \pi(1 | \alpha'_i) \]
+And hence, playing pure strategy $\alpha_i'$ is yields the same signal probability distribution as playing the mixed strategy $\alpha_i$. Now,
+\[ u(\alpha_i) = \pi(1 | \alpha_i) - \int_{e_i}\alpha_i(e_i)\frac{e_i + e_i^2}{2} \]
+\[ = \pi(1 | \alpha_i) -E_{\alpha_i}\left( \frac{e_i + e_i^2}{2} \right) \]
+\[ \le  \pi(1 | \alpha_i) - \left( \frac{e'_i + (e'_i)^2}{2} \right) \]
+\[ = \pi(1 | \alpha'_i) - \left( \frac{e'_i + (e'_i)^2}{2} \right) \]
+\[ = u(\alpha'_i) \]
+where the third line follows from Jensen's inequality. But this implies
+\[ r(\alpha_i) = (1-\delta)u(\alpha_i) + \delta \left( \sum_{y=0}^1 \pi(y | \alpha_i, \alpha_{-i}) w(y) \right) \]
+\[ \le (1-\delta)u(\alpha'_i) + \delta \left( \sum_{y=0}^1 \pi(y | \alpha_i) w(y) \right)\]
+\[ = (1-\delta)u(\alpha'_i) + \delta \left( \sum_{y=0}^1 \pi(y | \alpha'_i) w(y) \right)\]
+\[ = r(\alpha'_i) \]
+Then, if $\alpha_i$ is a NE of the game with rewards given by $\alpha_i$, we see that since $\alpha'_i$ is a pure strategy that delivers a payoff at least as good as $\alpha_i$, $\alpha'_i$ must also be a NE of the game that is enforced by the same $w$. Hence, it is without loss that we only consider pure strategies.
 
-\subparagraph{ii)} Answer to Problem 1(B)(ii) here.
-
-\subparagraph{iii)} Answer to Problem 1(B)(iii) here.
-
-\paragraph{C)} Answer to Problem 1(C) here.
-
-\paragraph{D)} Answer to Problem 1(D) here.
-
-\paragraph{E)} Answer to Problem 1(E) here.
-
-
+Now, we again take the same approach to showing that it is without loss that we consider symmetric strategies. Once again, assuming a public randomization device, $E_\delta$ is monotone in $\delta$, and since the limit as $\delta \to 1$ is contained in $\mathcal{H}$, it suffices to argue that $\mathcal{H}$ contains no asymmetric payoffs. To do this, we consider vectors $\lambda_{ij} = 1_i - 1_j$ again. The score is given by
+\[ \sup_{x,v} v_i - v_j \]
+where that $v$ is a NE of $\Gamma(x)$ where $x$ satsifies
+\[ x_i(y) - x_j(y) \le 0 \]
+The payoff for player $i$ is given by
+\[ v_i = \max_{e'} \left[ - \frac{\Delta(e' + (e')^2)}{2} + \left(1 + \sum e_k \right)\Delta (x_i(1) + 1)  + \left(1 - \left(1+ \sum e_k \right)\Delta \right)x_i(0) \right] \]
+To make notation cleaner, let us define $p(\vec{e}) = \left(1 + \sum e_k \right)\Delta$ as the probability of a positive signal assuming the effort vector $\vec{e}$.
+\[ v_i = \max_{e'} \left[ - \frac{\Delta(e' + (e')^2)}{2} + p(\vec{e}) (x_i(1) + 1)  + \left(1 - p(\vec{e}) \right)x_i(0) \right] \]
+Finding the maximum value from the FOC, we find
+\[ e_i = \frac{1}{2} + x_i(0) - x_i(1) \]
+and similarly
+\[ e_j = \frac{1}{2} + x_j(0) - x_j(1) \]
+Now, we consider
+\[ v_i - v_j = \frac{\Delta(e_j - e_i + e_j^2 - e_i^2)}{2} + p(\vec{e}) (x_i(1) - x_j(1))  + \left(1 - p(\vec{e}) \right)(x_i(0) - x_j(0)) \]
+To maximize this, we take the FOCs. With respect to $x_i(1)$, we get
+\[ (\Delta/2)(1 + 2e_i) + p(\vec{e}) + \Delta (x_i(1) - x_j(1)) - \Delta (x_i(0) - x_j(0)) = 0 \]
+\[ \Delta - \Delta x_j(1) + p(\vec{e}) + \Delta x_j(0) = 0 \]
+\[ -\frac{1}{\Delta} p(\vec{e}) = 1 + x_j(0) - x_j(1) \]
+with respect to $x_j(1)$, we get
+\[ \frac{\Delta}{2}(-1 - 2e_j) - p(\vec{e}) + \Delta(x_i(1) - x_j(1)) - \Delta(x_i(0) - x_j(0)) = 0 \]
+\[- \Delta + \Delta x_i(1)  - p(\vec{e}) - \Delta(x_i(0)) = 0 \]
+\[ 1  + x_i(0)-  x_i(1)  = -\frac{1}{\Delta}p(\vec{e}) \]
+So then we find, at optimum
+\[1  + x_i(0)-  x_i(1) = 1 + x_j(0) - x_j(1) \]
+\[ e_i = e_j \]
+Then at optimum, we have
+\[ v_i - v_j = p(\vec{e}) (x_i(1) - x_j(1))  + \left(1 - p(\vec{e}) \right)(x_i(0) - x_j(0))  \]
+However, $x_i(1) - x_j(1) \le 0$, and $x_i(0) - x_j(0) \le 0$ by the constraint $\lambda_{ij} x(y) \le 0$. Therefore,
+\[ v_i - v_j \le 0 \]
+We note that 0 is achieved if $x_i(y) = x_j(y)$, so the value  $\sup (v_i - v_j) = 0$.
+Hence we have $v_i \le v_j$ for payoffs of the game $\Gamma(x)$. But we note that if we set $x_i = x_j$, we can exactly achieve equality $v_i = v_j$. Therefore, the maximum value
+\[ \sup_{x,v} v_i - v_j = 0\]
+Again, due to FLT, we must then have that any equilibrium payoff vector must have $v_i = v_j$ for all pairs $i, j$, $v \in E_\delta$, and hence any equilibrium is symmetric. Thus, it is without loss that we consider symmetric strategies.
+\pagebreak
 \section*{Problem 2}
-
-\paragraph{A)} Answer to Problem 2(A) here.
-
-\paragraph{B)} Answer to Problem 2(B) here.
-
-
-\section*{Problem 3} Answer to Problem 3 here.
-
-
-\section*{Problem 4}
-
-\paragraph{A)} Answer to Problem 4(A) here.
-
-\paragraph{B)}  Answer to Problem 4(B) here.
+We first restate the model. Firms choose quantities $x^i_t$ to output at each period, and the observed price is a nondeterministic function of the total quantity
+\[ p_t = \theta_t p\left( \sum_{i=1}^n x_i \right) \]
+where $\theta$ is drawn according to CDF $F$. Each firm has a profit function given by
+\[ \pi_i(x^i_t, p_t ) \]
+Suppose that in the colluding state, other firms are outputting quantities $y_t^j$, $j \neq i$. Then we define
+\[ \gamma_i(x) = E_{\theta} \left[ \pi_i\left(x, \theta p\left(x + \sum_{j \neq i}y_t^j\right)\right) \right] \]
+The model supposes that when the price level drops below some threshold $\bar{p}$, the agents switch from a colluding state to a punishing state for a fixed $T$ periods, where all players play static Nash.
 
 
+Now, we consider when symmetric strategies are optimal. We would like to be able to take the same FLT algorithm approach as in the previous problem. We will first assume that $\gamma_i$ is independent of $i$; this implies that the reward functions $\pi_i$ are all identical, and we can denote them $\pi$. We first assume $p$ is monotone in $X = 1 \cdot \vec{x}$ (the sum of outputs). Now, from monotonicity, the signal comes from the observed price $t$, which follows a cumulative distribution $G$ as follows:
+\[ G( t | \vec{x} ) = Pr( \theta p(1 \cdot \vec{x}) \le t) = F\left( \frac{t}{p(1 \cdot \vec{x})} \right) \]
+and a pdf
+\[ g(t | \vec{x}) = \frac{1}{p(1 \cdot \vec{x})} f\left( \frac{t}{p(1 \cdot \vec{x})} \right) \]
+Define
+\[ u(x_i, x_{-i}) = \int \pi (x^i_t, t) g(t | x_i, x_{-i} ) \]
+
+We make some assumptions so that life is easier for us. We also assume a public randomization device, and we assume the algorithm of FLT extends to a continuum of signals. Consider the score $k(\lambda)$, defined as follows
+\[ \sup \lambda \cdot v \]
+subject to
+\[ v =^{NE} u( \cdot ) + \int \psi(t) g(t | \cdot ) \ dt \]
+and $\forall t$
+\[ \lambda \cdot \psi(t) \le 0  \]
+Assuming the extension of FLT to a continuum signal space, it suffices for symmetry to argue that this score in the direction of $\lambda_{ij} = e_i - e_j$ is 0, where $e_i$ and $e_j$ are the basis vectors in the direction $i$ and $j$. We thus seek to find conditions such that $k(\lambda_{ij}) = 0$. Let us examine the optimization program for $k(\lambda_{ij})$:
+\[ \sup (v_i - v_j) \]
+\[ v_i = \max_{x_i} \left[ u (x_i, x_{-i}) + \int \psi_i(t) g(t | x_i, x_{-i} ) \ dt  \right] \]
+\[ = \max_{x_i} \int \left(\pi(x_i, \theta p(x_i + \sum x_{-i})) + \psi_i(\theta p(x_i + \sum x_{-i}))\right) f(\theta) \ d\theta \]
+\[ = \max_{x_i} E_\theta \left[ \left(\pi(x_i, \theta p(x_i + \sum x_{-i})) + \psi_i(\theta p(x_i + \sum x_{-i}))\right) \right] \]
+\[ v_j = \max_{x_j} \left[ u (x_j, x_{-j}) + \int \psi_j(t) g(t | x_j, x_{-j} ) \ dt  \right] \]
+\[ = \max_{x_j} \int \left(\pi(x_j, \theta p(x_j + \sum x_{-j})) + \psi_j(\theta p(x_j + \sum x_{-j}))\right) f(\theta) \ d\theta \]
+\[ = \max_{x_j} E_\theta \left[ \left(\pi(x_j, \theta p(x_j + \sum x_{-j})) + \psi_j(\theta p(x_j + \sum x_{-j}))\right)  \right] \]
+and $\forall t$
+\[ \psi_i(t) \le \psi_j(t) \]
+Clearly, if we set $\psi_i = \psi_j$, then $v_i = v_j$, and therefore $0 \le k(\lambda_{ij})$. So it suffices to show $k(\lambda_{ij}) \le 0$. Since $\psi_i \le \psi_j$ for all price realizations, and since the price signal is symmetric in $i$ and $j$, we then have from linearity of expectation over $\theta$
+\[ v_i = \max_{x_i} E_\theta \left[ \left(\pi(x_i, \theta p(x_i + \sum x_{-i})) + \psi_i(\theta (x_i + \sum x_{-i}))\right)  \right] \]
+\[ \le \max_{x_j} E_\theta \left[ \left(\pi(x_j, \theta p(x_j + \sum x_{-i})) + \psi_i(\theta (x_j + \sum x_{-i}))\right) \right] + E_\theta [\psi_j(\theta (x_j + \sum x_{-j})) - \psi_i(\theta (x_j + \sum x_{-i}))]  \]
+\[ \le \max_{x_j} E_\theta \left[ \left(\pi(x_j, \theta p(x_j + \sum x_{-i})) + \psi_j(\theta (x_j + \sum x_{-j}))\right) \right] = v_j \]
+And hence, $k(\lambda_{ij}) = 0$. From symmetry on the signal, we get $k(\lambda_{ji}) = 0$, and hence we can restrict our attention to symmetric strategies.
+
+
+We lastly consider when static Nash is the optimal ``bad'' state. Specifically, we require that in the direction $\lambda =(-1, -1, ... -1)$, the optimal score $k(\lambda)$ is achieved for the Cournot competition payoffs.
+\[ \inf \sum_i v_i \]
+subject to
+\[ v_i =^{NE} u( x_i, \sum x_i ) + E_{\theta}( \psi_i(\theta(\sum x_i)) ) \]
+and $\forall t$
+\[ \sum \psi_i (t) \ge 0  \]
+Summing the constraint over all $i$, we get
+\[ \sum v_i = \sum_i \max_{x_i} \left( u( x_i, \sum x_i ) + E_{\theta}( \psi_i(\theta(\sum x_i)) ) \right)  \]
+Assuming that the choices $x_i^*$ are optimal, we find
+\[ \sum v_i = \sum_i  \left( u( x^*_i, \sum x^*_i ) + E_{\theta}( \psi_i(\theta(\sum x^*_i)) ) \right)  \]
+\[ = \sum_i  \left( u( x^*_i, \sum x^*_i ) + \sum_i E_{\theta}( \psi_i(\theta(\sum x^*_i)) ) \right)  \]
+\[ = \sum_i  \left( u( x^*_i, \sum x^*_i ) +  E_{\theta}( \sum_i\psi_i(\theta(\sum x^*_i)) ) \right)  \]
+\[ \ge \sum_i   u( x^*_i, \sum x^*_i )  \]
+Then the optimal bad state is Nash as long as the Nash equilibrium payoffs are also the minimax payoffs.
 \end{document}
 	% line of code telling latex that your document is ending. If you leave this out, you'll get an error
